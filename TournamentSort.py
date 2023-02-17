@@ -36,7 +36,10 @@ def tournament(arr):
                 winners.append(maximum)
             else:
                 losers.append(minimum)
-                losers.append(maximum)
+                if winners[-1] <= maximum:
+                    winners.append(maximum)
+                else:
+                    losers.append(maximum)
 
         if isOnlyRootNone():
             if left >= right:
