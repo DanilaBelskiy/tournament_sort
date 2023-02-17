@@ -1,4 +1,4 @@
 from TournamentSort import tournament
 
-arr = [4, 3, 0, 2, 5, 6]
+arr = [5, 4, 4, 4, 3]
 tournament(arr)

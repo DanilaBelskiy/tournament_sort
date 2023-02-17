@@ -22,6 +22,22 @@ def tournament(arr):
     arr_flag = 2
 
     while not isAllNone():
+
+        if arr_flag > len(arr) - 1:
+
+            minimum = min(left, right)
+            maximum = max(left, right)
+
+            left = None
+            right = None
+
+            if winners[-1] <= minimum:
+                winners.append(minimum)
+                winners.append(maximum)
+            else:
+                losers.append(minimum)
+                losers.append(maximum)
+
         if isOnlyRootNone():
             if left >= right:
                 root, right = right, root
@@ -43,7 +59,7 @@ def tournament(arr):
                 right, root = root, right
 
         if isAllNotNone():
-            # Первое вхождение, нужно, чтобы условие ничего не сломало
+            # Первое вхождение, нужно, чтобы условие после следующего else ничего не сломало
             if arr_flag == 3:
                 winners.append(root)
                 root = None
@@ -54,4 +70,7 @@ def tournament(arr):
                 else:
                     losers.append(root)
                     root = None
+
+    print(winners)
+    print(losers)
 
