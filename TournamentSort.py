@@ -14,66 +14,73 @@ def tournament(arr):
     def isAllNotNone():
         return not(root is None) and not(left is None) and not(right is None)
 
-    winners = []
-    losers = []
-    root = None
-    left = arr[0]
-    right = arr[1]
-    arr_flag = 2
+    while True:
 
-    while not isAllNone():
+        winners = []
+        losers = []
+        root = None
+        left = arr[0]
+        right = arr[1]
+        arr_flag = 2
 
-        if arr_flag > len(arr) - 1:
+        while not isAllNone():
 
-            minimum = min(left, right)
-            maximum = max(left, right)
+            if arr_flag > len(arr) - 1:
 
-            left = None
-            right = None
+                minimum = min(left, right)
+                maximum = max(left, right)
 
-            if winners[-1] <= minimum:
-                winners.append(minimum)
-                winners.append(maximum)
-            else:
-                losers.append(minimum)
-                if winners[-1] <= maximum:
+                left = None
+                right = None
+
+                if winners[-1] <= minimum:
+                    winners.append(minimum)
                     winners.append(maximum)
                 else:
-                    losers.append(maximum)
+                    losers.append(minimum)
+                    if winners[-1] <= maximum:
+                        winners.append(maximum)
+                    else:
+                        losers.append(maximum)
 
-        if isOnlyRootNone():
-            if left >= right:
-                root, right = right, root
-            else:
-                root, left = left, root
+            if isOnlyRootNone():
+                if left >= right:
+                    root, right = right, root
+                else:
+                    root, left = left, root
 
-        if isOnlyLeftNone():
-            left = arr[arr_flag]
-            arr_flag += 1
+            if isOnlyLeftNone():
+                left = arr[arr_flag]
+                arr_flag += 1
 
-            if left < root:
-                left, root = root, left
+                if left < root:
+                    left, root = root, left
 
-        if isOnlyRightNone():
-            right = arr[arr_flag]
-            arr_flag += 1
+            if isOnlyRightNone():
+                right = arr[arr_flag]
+                arr_flag += 1
 
-            if right < root:
-                right, root = root, right
+                if right < root:
+                    right, root = root, right
 
-        if isAllNotNone():
-            # Первое вхождение, нужно, чтобы условие после следующего else ничего не сломало
-            if arr_flag == 3:
-                winners.append(root)
-                root = None
-            else:
-                if len(winners) > 0 and root >= winners[-1]:
+            if isAllNotNone():
+                # Первое вхождение, нужно, чтобы условие после следующего else ничего не сломало
+                if arr_flag == 3:
                     winners.append(root)
                     root = None
                 else:
-                    losers.append(root)
-                    root = None
+                    if len(winners) > 0 and root >= winners[-1]:
+                        winners.append(root)
+                        root = None
+                    else:
+                        losers.append(root)
+                        root = None
 
-    print(winners)
-    print(losers)
+        print(winners)
+        print(losers)
+        print()
 
+        if len(losers) == 0:
+            return losers+winners
+        else:
+            arr = losers+winners
