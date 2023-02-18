@@ -14,6 +14,15 @@ def tournament(arr):
     def isAllNotNone():
         return not(root is None) and not(left is None) and not(right is None)
 
+    if len(arr) == 0:
+        return[[], []]
+
+    if len(arr) == 1:
+        return[[arr[0]], []]
+
+    if len(arr) == 2:
+        return[[min(arr[0], arr[1]), max(arr[0], arr[1])], []]
+
     winners = []
     losers = []
     root = None
@@ -76,4 +85,53 @@ def tournament(arr):
 
     print(winners)
     print(losers)
+
+    return [winners, losers]
+
+
+def array_merge(arr1, arr2):
+
+    flag1 = 0
+    flag2 = 0
+    buffer = []
+
+    while True:
+        if flag1 > len(arr1)-1:
+            buffer += arr2[flag2:]
+            break
+        elif flag2 > len(arr2)-1:
+            buffer += arr1[flag1:]
+            break
+        else:
+            if arr1[flag1] <= arr2[flag2]:
+                buffer.append(arr1[flag1])
+                flag1 += 1
+            else:
+                buffer.append(arr2[flag2])
+                flag2 += 1
+
+    return buffer
+
+
+def tournament_sort(arr):
+
+    losers = arr
+    winners_big = []
+
+    while len(losers) > 0:
+        result = tournament(losers)
+        winners_buffered = result[0]
+        losers = result[1]
+
+        winners_big.append(winners_buffered)
+
+    print(winners_big)
+    print()
+
+    for i in range(1, len(winners_big)):
+        winners_big[0] = array_merge(winners_big[0], winners_big[i])
+        winners_big[i] = []
+        print(winners_big)
+
+    return winners_big[0]
 
